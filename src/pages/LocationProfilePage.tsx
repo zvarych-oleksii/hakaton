@@ -83,7 +83,6 @@ const LocationProfilePage = () => {
 
     return (
         <div className="min-h-screen text-white py-10 px-4">
-            {/* Navigation Back Button */}
             <div className="max-w-4xl mx-auto mb-6">
                 <button
                     onClick={() => navigate(-1)}

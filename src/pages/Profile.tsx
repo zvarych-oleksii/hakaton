@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {User } from "../lib/types/user";
 import useApi from "../lib/axiosClient";
-import Loader from "../components/Loader";
 
 const ProfilePage = () => {
   const { getCurrentUser } = useApi();
@@ -25,7 +24,7 @@ const ProfilePage = () => {
 
 
 
-  if (loading || !user) return <Loader />;
+  if (loading || !user) return <></>;
 
   return (
     <div className="p-6">

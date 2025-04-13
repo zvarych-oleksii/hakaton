@@ -21,32 +21,11 @@ const Layout: React.FC = () => {
       >
         <div className="flex items-center space-x-2">
           <Link to={RoutesMain.Main} className="font-bold text-xl">
-            Pick<span className="italic">M</span>e
+            Hakaton
           </Link>
         </div>
         <div className="flex items-center gap-5">
-          <p className="text-xl font-bold">PickMy:</p>
           <nav className="flex items-center space-x-4">
-            <NavLink
-              to={RoutesMain.Resume}
-              className={({ isActive }) =>
-                isActive
-                  ? "border-b-2 py-2 border-white flex items-center hover:text-gray-300"
-                  : "flex items-center py-2 hover:text-gray-300"
-              }
-            >
-              Resume
-            </NavLink>
-            <NavLink
-              to={RoutesMain.Company}
-              className={({ isActive }) =>
-                isActive
-                  ? "border-b-2 py-2 border-white flex items-center hover:text-gray-300"
-                  : "flex items-center py-2 hover:text-gray-300"
-              }
-            >
-              Company
-            </NavLink>
             <NavLink
               to={RoutesMain.Location}
               className={({ isActive }) =>

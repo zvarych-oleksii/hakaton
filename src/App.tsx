@@ -4,14 +4,10 @@ import ProtectedRoutes from "./ProtectedRoute";
 import { RoutesMain } from "./common/enums/routes";
 import ProfilePage from "./pages/Profile";
 import Layout from "./Layout";
-import PartnerCompaniesPage from "./pages/PartnerCompanies";
-import CompanyProfilePage from "./pages/CompanyProfile";
-import BoostResumePage from "./pages/BoostResume";
 import { NotFoundPage } from "./pages/NotFound";
-import CreateStartUp from "./pages/CreateStartUp";
 import PickLocationPage from "./pages/PickLocation.tsx";
-import StartupDiscussionPage from "./pages/StartUpDiscussion";
-import ImproveStartupPage from "./pages/ImproveStartUp";
+import CreateLocation from "./pages/CreateLocation.tsx";
+import MainMapPage from "./pages/MainMap.tsx";
 
 const AppRoutes = () => {
   return (
@@ -20,19 +16,12 @@ const AppRoutes = () => {
       <Route element={<Layout />}>
         <Route element={<ProtectedRoutes />}>
           <Route path={RoutesMain.Profile} element={<ProfilePage />} />
-          <Route path={RoutesMain.LocationCreate} element={<CreateStartUp />} />
+          <Route path={RoutesMain.LocationCreate} element={<CreateLocation />} />
           <Route path={RoutesMain.Location} element={<PickLocationPage />} />
           <Route
             path={RoutesMain.LocationProfile}
-            element={<StartupDiscussionPage />}
           />
-          <Route path={RoutesMain.Resume} element={<BoostResumePage />} />
-          <Route path={RoutesMain.Main} element={<ImproveStartupPage />} />
-          <Route path={RoutesMain.Company} element={<PartnerCompaniesPage />} />
-          <Route
-            path={RoutesMain.CompanyProfile}
-            element={<CompanyProfilePage />}
-          />
+          <Route path={RoutesMain.Main} element={<MainMapPage />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />

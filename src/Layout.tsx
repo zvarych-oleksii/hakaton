@@ -48,14 +48,14 @@ const Layout: React.FC = () => {
               Company
             </NavLink>
             <NavLink
-              to={RoutesMain.Startup}
+              to={RoutesMain.Location}
               className={({ isActive }) =>
                 isActive
                   ? "border-b-2 py-2 border-white flex items-center hover:text-gray-300"
                   : "flex items-center py-2 hover:text-gray-300"
               }
             >
-              Startup
+              Locations
             </NavLink>
           </nav>
         </div>

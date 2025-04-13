@@ -58,7 +58,7 @@ const CreateStartUp: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     try {
       const created = await createStartup(data);
-      navigate(RoutesMain.StartupProfile.replace(":id", created.id));
+      navigate(RoutesMain.LocationProfile.replace(":id", created.id));
     } catch (error) {
       console.error("Startup creation failed:", error);
     }

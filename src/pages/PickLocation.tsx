@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RoutesMain } from "../common/enums/routes";
 import { Startup } from "../lib/types/startups";
@@ -20,10 +20,10 @@ function useDebounce(value: string, delay: number) {
   return debouncedValue;
 }
 
-const ALL_CATEGORIES = ["IT", "Miltech", "Fintech"];
+const ALL_CATEGORIES = ["Education", "Enjoy", "Interesting"];
 const ITEMS_PER_PAGE = 2;
 
-const PickStartupPage: React.FC = () => {
+const PickLocationPage = () => {
   const navigate = useNavigate();
   const { getStartups } = useApi();
 
@@ -36,7 +36,6 @@ const PickStartupPage: React.FC = () => {
   const [startups, setStartups] = useState<Startup[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch startups from API
   useEffect(() => {
     const fetchStartups = async () => {
       try {
@@ -82,13 +81,13 @@ const PickStartupPage: React.FC = () => {
     <div className="min-h-screen px-4 py-8 text-white">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold text-center sm:text-left">
-          EXPLORE STARTUPS
+          EXPLORE LOCATIONS
         </h1>
         <button
-          onClick={() => navigate(RoutesMain.StartupCreate)}
+          onClick={() => navigate(RoutesMain.LocationCreate)}
           className="mt-4 sm:mt-0 px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md text-sm font-semibold transition"
         >
-          + Create Startup
+          + Create Location
         </button>
       </div>
 
@@ -96,7 +95,7 @@ const PickStartupPage: React.FC = () => {
       <div className="max-w-3xl mx-auto mb-10 space-y-6">
         <input
           type="text"
-          placeholder="Search startups"
+          placeholder="Search locations"
           className="w-full px-4 py-3 rounded-lg bg-gray-800/40 backdrop-blur-md border border-gray-700 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -126,12 +125,12 @@ const PickStartupPage: React.FC = () => {
 
       {/* Startups List */}
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-2xl font-semibold mb-6">FEATURED STARTUPS</h2>
+        <h2 className="text-2xl font-semibold mb-6">FEATURED Location</h2>
 
         {isLoading ? (
           <p className="text-gray-400">Loading...</p>
         ) : startups.length === 0 ? (
-          <p className="text-gray-400">No startups found for your selection.</p>
+          <p className="text-gray-400">No locations found for your selection.</p>
         ) : (
           <div className="space-y-6">
             {startups.map((startup, index) => (
@@ -151,7 +150,7 @@ const PickStartupPage: React.FC = () => {
                 <button
                   onClick={() =>
                     navigate(
-                      RoutesMain.StartupProfile.replace(":id", startup.id),
+                      RoutesMain.LocationProfile.replace(":id", startup.id),
                     )
                   }
                   className="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-md text-sm font-medium transition"
@@ -185,4 +184,4 @@ const PickStartupPage: React.FC = () => {
   );
 };
 
-export default PickStartupPage;
+export default PickLocationPage;

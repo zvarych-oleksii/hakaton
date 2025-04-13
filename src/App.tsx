@@ -8,6 +8,7 @@ import { NotFoundPage } from "./pages/NotFound";
 import PickLocationPage from "./pages/PickLocation.tsx";
 import CreateLocation from "./pages/CreateLocation.tsx";
 import MainMapPage from "./pages/MainMap.tsx";
+import LocationProfilePage from "./pages/LocationProfilePage.tsx";
 
 const AppRoutes = () => {
   return (
@@ -20,6 +21,7 @@ const AppRoutes = () => {
           <Route path={RoutesMain.Location} element={<PickLocationPage />} />
           <Route
             path={RoutesMain.LocationProfile}
+            element={<LocationProfilePage/>}
           />
           <Route path={RoutesMain.Main} element={<MainMapPage />} />
         </Route>

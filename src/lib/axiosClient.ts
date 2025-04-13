@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { User } from "./types/user";
-import {LocationCreate, Location} from "./types/location.ts";
+import { LocationCreate, Location } from "./types/location.ts";
 
 export interface ValidationError {
   loc: (string | number)[];
@@ -21,15 +21,15 @@ const useApi = () => {
   });
 
   axiosInstance.interceptors.request.use(
-    async (config) => {
-      const tokenClaims = await getIdTokenClaims();
-      const token = tokenClaims?.__raw;
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    },
-    (error) => Promise.reject(error),
+      async (config) => {
+        const tokenClaims = await getIdTokenClaims();
+        const token = tokenClaims?.__raw;
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => Promise.reject(error),
   );
 
   const getCurrentUser = async (): Promise<User> => {
@@ -42,9 +42,7 @@ const useApi = () => {
     }
   };
 
-  const createLocation = async (
-      data: LocationCreate,
-  ): Promise<Location> => {
+  const createLocation = async (data: LocationCreate): Promise<Location> => {
     const response = await axiosInstance.post("locations/", data);
     return response.data;
   };
@@ -73,10 +71,16 @@ const useApi = () => {
     return response.data;
   };
 
+  const getLocation = async (id: string): Promise<Location> => {
+    const response = await axiosInstance.get(`locations/${id}`);
+    return response.data;
+  };
+
   return {
     getCurrentUser,
     listLocations,
     createLocation,
+    getLocation, // Exported new method
   };
 };
 

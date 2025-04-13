@@ -33,7 +33,7 @@ export const LoginPage = () => {
         style={{ background: "rgba(0,0,0, 20%)" }}
       >
         <Link to={RoutesMain.Main} className="text-white text-2xl font-bold">
-          PICK<span className="italic">M</span>e
+          Hakaton
         </Link>
       </header>
 

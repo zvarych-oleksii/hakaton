@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+  --color-card-dark: rgba(14, 14, 20, 0.5);
+  --color-card-white: rgba(255, 255, 255, 0.05);
+  --colorborder-white: rgba(255, 255, 255, 0.1);
+}

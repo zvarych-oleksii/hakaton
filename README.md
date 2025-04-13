@@ -1,54 +1,104 @@
-# React + TypeScript + Vite
+# Інклюзивна Карта
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Опис проекту
 
-Currently, two official plugins are available:
+**Інклюзивна Карта** — це веб‑сервіс для пошуку доступних місць у містах. Проект створено з метою сприяння післявоєнному відновленню міст, роблячи їх зручними та доступними для всіх. Додаток дозволяє користувачам:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Пошук доступних локацій:** Фільтрувати місця за категоріями за допомогою визначених критеріїв (наявність пандусів, тактильних елементів, адаптованих туалетів тощо).
+- **Побудова оптимальних маршрутів:** Створювати маршрути з урахуванням рівня доступності та фільтрів інклюзивності.
+- **Відгуки та оцінювання:** Додавати оцінки та коментарі до локацій, а також пропонувати поліпшення характеристик рівнів доступності.
+- **Редагування характеристик:** Користувачі з особливими потребами можуть мати можливість редагувати доступність певних об’єктів.
+- **Динамічне оновлення:** Проект враховує змінені умови та дозволяє інтерактивний вибір локацій і побудову маршрутів для користувачів.
 
-## Expanding the ESLint configuration
+Проект також включає показ послуг для людей з обмеженими можливостями (наприклад, кінотеатри з субтитрами) та забезпечує зручність використання додатку для людей з вадами зору.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Актуальність
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Післявоєнне відновлення міст відкриває можливість не лише відбудувати зруйновану інфраструктуру, а й зробити простір сучасним та інклюзивним. Доступність міського середовища є критично важливою для людей із особливими потребами, тому наш сервіс допомагає:
+ 
+- Зменшити численні перешкоди у щоденному житті.
+- Забезпечити мобільність та участь у суспільному житті всіх мешканців.
+- Створити місто, де кожен може почуватися комфортно та вільно.
+
+## Технічний стек
+
+- **React** – для побудови компонентного інтерфейсу користувача.
+- **Vite** – для швидкого та ефективного збірки проекту.
+- **TypeScript** – для додавання типізації та покращення якості коду.
+- **Tailwind CSS** – для сучасного, адаптивного та зручного дизайну.
+- **React‑Leaflet** – для інтеграції інтерактивних карт.
+- **Axios** – для роботи з API-запитами.
+- **Auth0** – для автентифікації користувачів.
+
+## Функціональні можливості
+
+- **Розширений пошук локацій:** Фільтрація за категоріями та пошук за ключовими словами.
+- **Інтерактивна карта:** Відображення локацій на мапі за допомогою React‑Leaflet. На hover маркера відображається коротка інформація (назва, тип, фактори).
+- **Профіль локації:** Детальна сторінка з інформацією про конкретну локацію, включно з відгуками та мінікартами.
+- **Побудова маршрутів:** Система генерування оптимальних маршрутів з урахуванням доступності, фільтрів інклюзивності.
+- **Зворотній зв’язок:** Можливість залишати відгуки та пропозиції щодо поліпшення рівнів доступності.
+
+## Інсталяція та запуск
+
+1. **Клонування репозиторію:**
+
+   ```bash
+   git clone https://github.com/zvarych-oleksii/hakaton.git
+   cd hakaton
+   ```
+
+2. **Встановлення залежностей:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Налаштування змінних середовища:**
+
+   Створіть файл `.env` в корені проекту і додайте наступні змінні (замінивши значення на свої):
+
+   ```env
+    VITE_AUTH0_DOMAIN=
+    VITE_AUTH0_CLIENT_ID=
+    VITE_AUTH0_AUDIENCE=
+    VITE_API_URL=
+   ```
+
+4. **Запуск проекту:**
+
+   ```bash
+   npm run dev
+   ```
+
+   Проект буде доступний зазвичай за адресою [http://localhost:5173](http://localhost:5173).
+
+## Структура проекту
+
+```
+├── public/                # Статичні файли, зображення, favicon тощо
+├── src/
+│   ├── pages/             # Сторінки додатку (PickLocationPage, LocationProfilePage, BuildRoutesPage, MainMapPage)
+│   ├── lib/               # Конфігурації API (useApi.ts), допоміжні утиліти
+│   ├── types/             # Типи даних, інтерфейси (Location, User, etc.)
+│   ├── common/            # Загальні схеми (schemas.ts), константи, стилі
+│   └── App.tsx            # Головний компонент додатку
+├── .env                   # Змінні середовища
+├── package.json           # Конфігурація проекту
+└── README.md              # Це README файл
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Майбутні покращення
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Розширення функціоналу маршруту:** Інтеграція алгоритмів для побудови оптимальних маршрутів з урахуванням різних критеріїв інклюзивності.
+- **Покращення системи відгуків:** Можливість завантаження фотографій, оцінювання та модерування відгуків.
+- **Підтримка багатомовності:** Реалізація локалізації для підтримки кількох мов.
+- **Розширення фільтрації:** Додавання додаткових критеріїв фільтрації локацій та транспорту.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Додаткові вимоги
+
+- **Адаптивний дизайн:** Проект повністю адаптивний та зручний для перегляду на різних пристроях.
+- **Хостинг:** Проект розміщено на хостингу, доступному за URL (посилання додається).
+- **GitHub:** Код проекту розміщено на GitHub із детальною історією комітів.
+- **Документація:** Цей README містить докладну інформацію про функціональне рішення.
+- **Презентація:** Відео презентація продукту з поясненням функціоналу та перспектив подальшого розвитку буде додано до репозиторію та розміщене онлайн.
+

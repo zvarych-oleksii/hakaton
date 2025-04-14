@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { User } from "./types/user";
-import { LocationCreate, Location } from "./types/location.ts";
+import { LocationCreate, Location } from "./types/location";
+import { LocationReview, LocationReviewCreate } from "./types/comment";
 
 export interface ValidationError {
   loc: (string | number)[];
@@ -29,7 +30,7 @@ const useApi = () => {
         }
         return config;
       },
-      (error) => Promise.reject(error),
+      (error) => Promise.reject(error)
   );
 
   const getCurrentUser = async (): Promise<User> => {
@@ -76,11 +77,33 @@ const useApi = () => {
     return response.data;
   };
 
+  const getCommentsByLocationId = async (
+      location_id: string,
+      skip = 0,
+      limit = 100,
+  ): Promise<LocationReview[]> => {
+    const response = await axiosInstance.get(
+        `location-reviews/for_location/${location_id}`,
+        { params: { skip, limit } },
+    );
+    return response.data;
+  };
+
+  const createComment = async (
+      data: LocationReviewCreate,
+  ): Promise<LocationReview> => {
+    const response = await axiosInstance.post("location-reviews/", data);
+    return response.data;
+  };
+
+
   return {
     getCurrentUser,
     listLocations,
     createLocation,
-    getLocation, // Exported new method
+    getLocation,
+    getCommentsByLocationId,
+    createComment,
   };
 };
 

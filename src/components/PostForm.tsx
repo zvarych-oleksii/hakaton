@@ -25,14 +25,12 @@ interface StarRatingProps {
 }
 
 const StarRating: React.FC<StarRatingProps> = ({ control, name }) => {
-  // Provide defaultValue explicitly in the controller to ensure a defined number value
   const { field } = useController({
     control,
     name,
     defaultValue: 1,
   });
 
-  // Guarantee that field.value is a number for proper comparison
   const currentRating = Number(field.value) || 0;
 
   return (
@@ -41,7 +39,6 @@ const StarRating: React.FC<StarRatingProps> = ({ control, name }) => {
             <FaStar
                 key={star}
                 onClick={() => field.onChange(star)}
-                // Stars up to currentRating become "gold"; the rest "gray"
                 color={star <= currentRating ? "gold" : "gray"}
                 className="cursor-pointer text-2xl"
             />

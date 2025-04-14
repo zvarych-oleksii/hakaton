@@ -52,12 +52,10 @@ const LocationProfilePage = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
-    // Load location and reviews via API
     const { getLocation, getCommentsByLocationId, createComment } = useApi();
     const [location, setLocation] = useState<Location | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    // State for location review discussion
     const [reviews, setReviews] = useState<Review[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [showForm, setShowForm] = useState(false);
@@ -69,7 +67,6 @@ const LocationProfilePage = () => {
         currentPage * REVIEWS_PER_PAGE
     );
 
-    // Helper to build a hierarchical review tree
     const buildReviewTree = (flatReviews: Review[]): Review[] => {
         const reviewMap: { [key: string]: Review & { replies: Review[] } } = {};
         const topReviews: Review[] = [];
@@ -121,7 +118,7 @@ const LocationProfilePage = () => {
         try {
             const payload: LocationReviewCreate = {
                 review: data.review,
-                rating: 5, // default rating for new reviews (this value is set on review creation)
+                rating: 5,
                 reply_to_id: replyToId,
                 location_id: id,
             };
@@ -151,7 +148,6 @@ const LocationProfilePage = () => {
         }
     };
 
-    // Renders individual review with its details and reply form
     const renderReview = (review: Review) => (
         <div
             key={review.id}
@@ -167,7 +163,6 @@ const LocationProfilePage = () => {
                 </div>
             </div>
 
-            {/* Display the rating as stars */}
             <div className="mt-2">
                 <StarRatingDisplay rating={review.rating} />
             </div>
@@ -286,7 +281,6 @@ const LocationProfilePage = () => {
                     </MapContainer>
                 </div>
 
-                {/* Discussion Section */}
                 <div className="mt-8">
                     <div className="flex justify-between items-center bg-gray-800 border border-gray-700 rounded-xl p-4 mb-6">
                         <span className="text-sm">Join the discussion:</span>

@@ -39,7 +39,6 @@ function useDebounce(value: string, delay: number) {
 const ALL_CATEGORIES = ["Education", "Enjoy", "Interesting"];
 const ITEMS_PER_PAGE = 4;
 
-// Компонент для відображення мінікарти з маркером
 type MiniMapProps = {
   coordinates: { lat: number; lng: number };
 };
@@ -69,7 +68,6 @@ const PickLocationPage = () => {
   const debouncedSearchQuery = useDebounce(searchQuery, 400);
 
   const [locations, setLocations] = useState<Location[]>([]);
-  // Тепер можна обирати більше ніж одну категорію
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +78,6 @@ const PickLocationPage = () => {
         setIsLoading(true);
         const skip = (currentPage - 1) * ITEMS_PER_PAGE;
         const search = debouncedSearchQuery || undefined;
-        // Якщо вибрано хоча б одну категорію, перетворюємо всі в нижній регістр
         const types =
             selectedCategories.length > 0
                 ? selectedCategories.map((cat) => cat.toLowerCase())
@@ -98,7 +95,6 @@ const PickLocationPage = () => {
     fetchLocations();
   }, [debouncedSearchQuery, selectedCategories, currentPage]);
 
-  // Дозволяємо вибір/скасування категорій
   const toggleCategory = (category: string) => {
     setSelectedCategories((prev) =>
         prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
@@ -121,7 +117,6 @@ const PickLocationPage = () => {
           </button>
         </div>
 
-        {/* Пошук та Фільтри */}
         <div className="max-w-3xl mx-auto mb-10 space-y-6">
           <input
               type="text"
@@ -153,7 +148,6 @@ const PickLocationPage = () => {
 
         <div className="border-t border-dashed border-gray-500 my-10 max-w-3xl mx-auto" />
 
-        {/* Список локацій */}
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold mb-6">FEATURED LOCATIONS</h2>
 
@@ -162,7 +156,6 @@ const PickLocationPage = () => {
           ) : locations.length === 0 ? (
               <p className="text-gray-400">No locations found for your selection.</p>
           ) : (
-              // Використовуємо сітку, 2 локації на рядок на середніх і великих екранах
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {locations.map((location) => (
                     <div
@@ -190,7 +183,6 @@ const PickLocationPage = () => {
                             </div>
                         )}
                       </div>
-                      {/* Відображення мінікарти з координатами локації */}
                       <div className="w-full flex items-center align-center justify-center">
                         <MiniMap coordinates={location.coordinates} />
                       </div>
@@ -207,7 +199,6 @@ const PickLocationPage = () => {
               </div>
           )}
 
-          {/* Пагінація */}
           <div className="flex justify-center space-x-2 mt-8">
             <button
                 onClick={handlePrev}

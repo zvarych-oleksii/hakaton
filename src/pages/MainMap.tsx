@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import useApi from "../lib/axiosClient";
-import { Location } from "../lib/types/location.ts";
+import { Location } from "../lib/types/location";
 import L from "leaflet";
+import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
@@ -21,16 +22,19 @@ const MainMapPage = () => {
     const { listLocations } = useApi();
     const [locations, setLocations] = useState<Location[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+    const defaultCenter: [number, number] = [50.4501, 30.5234];
 
     useEffect(() => {
         const fetchLocations = async () => {
             try {
                 setIsLoading(true);
-                // Retrieve all locations; adjust limit as needed.
                 const data = await listLocations({ skip: 0, limit: 100 });
                 setLocations(data);
             } catch (error) {
-                console.error("Failed to fetch locations:", error);
+                console.error("Не вдалося отримати локації:", error);
             } finally {
                 setIsLoading(false);
             }
@@ -39,11 +43,26 @@ const MainMapPage = () => {
         fetchLocations();
     }, []);
 
-    const defaultCenter: [number, number] = [50.4501, 30.5234];
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setUserLocation([position.coords.latitude, position.coords.longitude]);
+                },
+                (error) => {
+                    console.error("Не вдалося отримати місцезнаходження користувача:", error.message);
+                }
+            );
+        } else {
+            alert("Geolocation не підтримується цим браузером.");
+        }
+    }, []);
+
+    const currentCenter = userLocation || defaultCenter;
 
     return (
         <div className="min-h-screen">
-            <MapContainer center={defaultCenter} zoom={12} style={{ height: "100vh", width: "100%" }}>
+            <MapContainer center={currentCenter} zoom={12} style={{ height: "100vh", width: "100%" }}>
                 <TileLayer
                     attribution="&copy; OpenStreetMap contributors"
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -54,27 +73,31 @@ const MainMapPage = () => {
                             key={location.id}
                             position={[location.coordinates.lat, location.coordinates.lng]}
                         >
-                            <Tooltip
-                                direction="top"
-                                offset={[0, -10]}
-                                opacity={1}
-                                // We disable the default tooltip styling so our custom styling can take effect.
-                                className="!bg-transparent !shadow-none"
-                            >
-                                <div className="bg-gray-900 bg-opacity-80 text-white px-4 py-2 rounded-md shadow-md">
-                                    <div className="font-bold text-lg">
-                                        {location.name}
-                                    </div>
-                                    <div className="text-sm">
+                            <Popup>
+                                <div className="bg-white text-black px-4 py-2 rounded-md">
+                                    <div className="font-bold text-lg">{location.name}</div>
+                                    <div className="text-sm mb-2">
                                         {location.type.charAt(0).toUpperCase() + location.type.slice(1)}
                                     </div>
-                                    {location.factors?.list && location.factors.list.length > 0 && (
-                                        <div className="mt-1 text-xs">
-                                            {location.factors.list.join(", ")}
+                                    {location.factors?.list && (
+                                        <div className="flex flex-wrap gap-1">
+                                            {location.factors.list.map((factor, idx) => (
+                                                <span key={idx} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+                                                    {factor}
+                                                </span>
+                                            ))}
                                         </div>
                                     )}
+                                    <button
+                                        className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+                                        onClick={() =>
+                                            navigate("/route", { state: { selectedLocation: location } })
+                                        }
+                                    >
+                                        Побудувати маршрут
+                                    </button>
                                 </div>
-                            </Tooltip>
+                            </Popup>
                         </Marker>
                     ))}
             </MapContainer>
